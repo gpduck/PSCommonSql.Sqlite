@@ -62,11 +62,13 @@ Task Version-Module {
       | % {$_ -replace "\`$version\`$", "$version" } `
       | % {$_ -replace "\`$sha\`$", "$changeset" } `
       | Set-Content "$baseDir\$ModuleName\$ModuleName.psm1"
+    Update-ModuleManifest -Path "$baseDir\$ModuleName\$ModuleName.psd1" -ModuleVersion $Version
 }
 
 Task Unversion-Module {
     Set-Location $baseDir
     git.exe checkout -- $baseDir\$ModuleName\$ModuleName.psm1
+    git.exe checkout -- $baseDir\$ModuleName\$ModuleName.psd1
     Set-Location $currentDir
 }
 
