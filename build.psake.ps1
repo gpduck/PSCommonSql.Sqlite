@@ -96,7 +96,8 @@ Task DoPSGalleryRelease {
       
       $ModuleInfo = Get-Module -List -Name "$PublishParams['Path']\$ModuleName.psd1"
       $ModuleInfoParams = $ModuleInfo.PrivateData.PSData
-      
+      Write-Host ($PublishParams | Convertto-Json)
+      Write-Host ($ModuleInfoParams | ConvertTo-Json)
       Publish-Module @PublishParams @ModuleInfoParams
     }
 }

@@ -83,8 +83,6 @@ PrivateData = @{
 		ProjectUri = "https://github.com/gpduck/PSCommonSql.Sqlite"
 		
 		LicenseUri = "https://raw.githubusercontent.com/gpduck/PSCommonSql.Sqlite/master/LICENSE"
-
-		IsPrerelease = 'False'
 	}
 }
 
