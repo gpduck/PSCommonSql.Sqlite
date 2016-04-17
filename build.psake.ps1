@@ -29,7 +29,7 @@ Task Test -Depends Init,CopyLibraries {
     Import-Module Pester -ErrorAction Stop
     $PesterResult = Invoke-Pester -PassThru -OutputFormat NUnitXml -OutputFile $baseDir\PesterResult.xml
     if($env:APPVEYOR -eq "True") {
-        $Address = "https://ci.appveyor.com/api/testresults/nunit3/$($env:APPVEYOR_JOB_ID)"
+        $Address = "https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)"
         $wc = New-Object System.Net.WebClient
         $wc.UploadFile($Address, "$baseDir\PesterResult.xml")
     }
