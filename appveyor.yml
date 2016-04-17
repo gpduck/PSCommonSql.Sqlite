@@ -42,4 +42,4 @@ artifacts:
 # Duct tape, until this is implemented:
 #    https://github.com/appveyor/ci/issues/128
 deploy_script:
-  - ps: .\build.bat Release
+  - ps: .\build.bat PSGalleryRelease

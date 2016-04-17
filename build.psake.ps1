@@ -81,19 +81,23 @@ Task Push-Nuget {
 }
 
 Task PSGalleryRelease {
-    #Thanks to Trevor Sullivan!
-    #https://github.com/pcgeek86/PSNuGet/blob/master/deploy.ps1
-    Find-Package -ForceBootstrap -Name zzzzzz -ErrorAction Ignore;
-    
-    $PublishParams = @{
-        Path = Join-Path $baseDir "$ModuleName\$ModuleName"
-        NuGetApiKey = $ENV:NugetApiKey
+    if($ENV:APPVEYOR_REPO_BRANCH -ne "master") {
+        Write-Verbose "Skipping deployment for branch $ENV:APPVEYOR_REPO_BRANCH"
+    } else {
+      #Thanks to Trevor Sullivan!
+      #https://github.com/pcgeek86/PSNuGet/blob/master/deploy.ps1
+      Find-Package -ForceBootstrap -Name zzzzzz -ErrorAction Ignore;
+      
+      $PublishParams = @{
+          Path = Join-Path $baseDir "$ModuleName\$ModuleName"
+          NuGetApiKey = $ENV:NugetApiKey
+      }
+      
+      $ModuleInfo = Get-Module -List -Name $PublishParams["Path"]
+      $ModuleInfoParams = $ModuleInfo.PrivateData.PSData
+      
+      Publish-Module @PublishParams @ModuleInfoParams
     }
-    
-    $ModuleInfo = Get-Module -List -Name $PublishParams["Path"]
-    $ModuleInfoParams = $ModuleInfo.PrivateData.PSData
-    
-    Publish-Module @PublishParams @ModuleInfoParams
 }
 
 function RequireModule {
