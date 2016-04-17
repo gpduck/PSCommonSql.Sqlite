@@ -38,8 +38,20 @@ test_script:
 # zipped package for delivery
 artifacts:
   - path: '**\$(ModuleName).*.nupkg'
+    name: ModulePackage
 
 # Duct tape, until this is implemented:
 #    https://github.com/appveyor/ci/issues/128
 deploy_script:
   - ps: .\build.bat PSGalleryRelease
+
+deploy:
+- provider: GitHub
+  tag: $(appveyor_build_version)
+  release: $(appveyor_build_version)
+  auth_token:
+    secure: jcjETJ6KmP53oPFOnBG/id5YWeBMw1Vh564VS+S50CgO75ZWnmKGXdoQw65ino0s
+  artifact: ModulePackage
+  draft: true
+  on:
+    branch: master
