@@ -30,7 +30,8 @@ Task Test -Depends Init,CopyLibraries {
     $PesterResult = Invoke-Pester -PassThru -OutputFormat NUnitXml -OutputFile $baseDir\PesterResult.xml
     if($env:APPVEYOR -eq "True") {
         $Address = "https://ci.appveyor.com/api/testresults/nunit3/$($env:APPVEYOR_JOB_ID)"
-        Invoke-RestMethod -uri $Address -Method Post -InFile $baseDir\PesterResult.xml -ContentType "multipart/form-data"
+        $wc = New-Object System.Net.WebClient
+        $wc.UploadFile($Address, "$baseDir\PesterResult.xml")
     }
     
     if($PesterResult.FailedCount -gt 0) {
