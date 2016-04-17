@@ -6,7 +6,7 @@ environment:
   ModuleName: $(APPVEYOR_PROJECT_NAME) # Hard code if you really need to...
   GitHubRelease: $(APPVEYOR_PROJECT_NAME)-v1.0.1 # TODO: extract version from PSD1...
   NugetApiKey: # Add your API key to AppVeyor, paste the encrypted bit here
-    secure: v/rfpnUEoQZscZmcQFHEdlrBanHQVYs3WyEKGkhTrKAQeJ4ejrhd0IC3m7PlAAoN
+    secure: 8oejCagCM0DPK8PK+0vZ+SCsgsYSW55dT3lFKgY5i+vFP9CSCsNEnaJzVmzmgpQn
 
 #Beware the infinite rebuild bug. Woke up to 84 new releases!
 skip_tags: true
