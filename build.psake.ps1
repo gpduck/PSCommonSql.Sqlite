@@ -9,6 +9,8 @@ properties {
 }
 
 $ModuleName = "PSCommonSql.Sqlite"
+$NugetPath = Split-Path $NugetEXE -parent
+$env:path += ";$NugetPath"
 
 Task default -depends Test, Build
 Task Build -depends CopyLibraries
@@ -85,9 +87,6 @@ Task DoPSGalleryRelease {
     if($ENV:APPVEYOR_REPO_BRANCH -ne "master") {
         Write-Verbose "Skipping deployment for branch $ENV:APPVEYOR_REPO_BRANCH"
     } else {
-      $NugetPath = Split-Path $NugetEXE -parent
-      $env:path += ";$NugetPath"
-      
       $PublishParams = @{
           Path = Join-Path $baseDir "$ModuleName"
           NuGetApiKey = $ENV:NugetApiKey
