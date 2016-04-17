@@ -103,12 +103,8 @@ Task PSGalleryRelease {
 function RequireModule {
   param($Name)
   if(-not (Get-Module -List -Name $Name )) {
-    try {
-      Import-Module PowershellGet -ErrorAction Stop
-      Find-Package -ForceBootstrap -Name zzzzzz -ErrorAction Ignore
-      Install-Module $Name -Scope CurrentUser
-    } catch {
-      throw $_
-    }
+    Import-Module PowershellGet -ErrorAction Stop
+    Find-Package -ForceBootstrap -Name zzzzzz -ErrorAction Ignore
+    Install-Module $Name -Scope CurrentUser
   }  
 }
