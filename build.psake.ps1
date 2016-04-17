@@ -98,7 +98,7 @@ Task DoPSGalleryRelease {
         Write-Host $_.Fullname
       }
       
-      $ModuleInfo = Get-Module -List -Name $PublishParams['Path']
+      $ModuleInfo = Get-Module -List -Name $PublishParams['Path'] -ErrorAction Stop
       $ModuleInfoParams = $ModuleInfo.PrivateData.PSData
 
       Publish-Module @PublishParams @ModuleInfoParams
