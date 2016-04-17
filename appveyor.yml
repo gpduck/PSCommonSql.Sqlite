@@ -37,7 +37,7 @@ test_script:
 
 # zipped package for delivery
 artifacts:
-  - path: **\$(ModuleName).*.nupkg
+  - path: '**\$(ModuleName).*.nupkg'
 
 # Duct tape, until this is implemented:
 #    https://github.com/appveyor/ci/issues/128
