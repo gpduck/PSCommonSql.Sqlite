@@ -14,6 +14,7 @@ Task default -depends Test, Build
 Task Build -depends CopyLibraries
 Task Package -depends Version-Module, Pack-Nuget, Unversion-Module
 Task Release -depends Package, Push-Nuget
+Task PSGalleryRelease -depends Version-Module, DoPSGalleryRelease, Unversion-Module
 
 Task Test -Depends CopyLibraries {
     RequireModule "Pester"
@@ -80,7 +81,7 @@ Task Push-Nuget {
     exec { .$nugetExe push $pkg.FullName }
 }
 
-Task PSGalleryRelease {
+Task DoPSGalleryRelease {
     if($ENV:APPVEYOR_REPO_BRANCH -ne "master") {
         Write-Verbose "Skipping deployment for branch $ENV:APPVEYOR_REPO_BRANCH"
     } else {
