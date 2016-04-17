@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>PSCommonSql.Sqlite</id>
+    <version>$version$</version>
+    <title>PSCommonSql.Sqlite</title>
+    <summary>Provides SQLite support to the PSCommonSql module</summary>
+    <description>Provides SQLite support to the PSCommonSql module.</description>
+    <tags>powershell sql sqlite</tags>
+    <authors>Chris Duck</authors>
+    <projectUrl>https://github.com/gpduck/PSCommonSql.Sqlite</projectUrl>
+    <licenseUrl>https://raw.githubusercontent.com/gpduck/PSCommonSql.Sqlite/master/LICENSE</licenseUrl>
+  </metadata>
+  <files>
+    <file src="PSCommonSql.Sqlite\**\*.*" target="$targetBase$" />
+    <file src="LICENSE*" target="$targetBase$" />
+  </files>
+</package>
