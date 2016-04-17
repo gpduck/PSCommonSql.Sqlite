@@ -1,3 +1,4 @@
 build/
 vendor/packages/
 System.Data.Sqlite/bin/
+PesterResult.xml

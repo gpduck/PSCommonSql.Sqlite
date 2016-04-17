@@ -3,15 +3,12 @@ properties {
     $Invocation = (Get-Variable MyInvocation -Scope 1).Value
     $baseDir = $psake.build_script_dir
     $version = git.exe describe --abbrev=0 --tags
-    $nugetExe = "$baseDir\vendor\tools\nuget"
+    $nugetExe = "${baseDir}\vendor\tools\nuget"
     $targetBase = "tools"
     $NugetApiKey = $ENV:NugetApiKey
 }
 
-Write-Host "Using nuget at $NugetExe"
 $ModuleName = "PSCommonSql.Sqlite"
-$NugetPath = Split-Path $NugetEXE -parent
-$env:path += ";$NugetPath"
 
 Task default -depends Test, Build
 Task Build -depends CopyLibraries
@@ -19,7 +16,12 @@ Task Package -depends Version-Module, Pack-Nuget, Unversion-Module
 Task Release -depends Package, Push-Nuget
 Task PSGalleryRelease -depends Version-Module, DoPSGalleryRelease, Unversion-Module
 
-Task Test -Depends CopyLibraries {
+Task Init {
+    $NugetPath = Split-Path $NugetEXE -parent
+    $env:path += ";$NugetPath"
+}
+
+Task Test -Depends Init,CopyLibraries {
     RequireModule "Pester"
     RequireModule "PSCommonSql"
     
@@ -84,7 +86,7 @@ Task Push-Nuget {
     exec { .$nugetExe push $pkg.FullName }
 }
 
-Task DoPSGalleryRelease {
+Task DoPSGalleryRelease -Depends Init {
     if($ENV:APPVEYOR_REPO_BRANCH -ne "master") {
         Write-Verbose "Skipping deployment for branch $ENV:APPVEYOR_REPO_BRANCH"
     } else {
@@ -102,6 +104,6 @@ function RequireModule {
   if(-not (Get-Module -List -Name $Name )) {
     Import-Module PowershellGet -ErrorAction Stop
     Find-Package -ForceBootstrap -Name zzzzzz -ErrorAction Ignore
-    Install-Module $Name -Scope CurrentUser
+    Install-Module $Name -Scope CurrentUser -Confirm:$false -Force
   }
 }
