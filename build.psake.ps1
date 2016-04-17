@@ -90,7 +90,7 @@ Task DoPSGalleryRelease {
       Find-Package -ForceBootstrap -Name zzzzzz -ErrorAction Ignore;
       
       $PublishParams = @{
-          Path = Join-Path $baseDir "$ModuleName\$ModuleName"
+          Path = Join-Path $baseDir "$ModuleName"
           NuGetApiKey = $ENV:NugetApiKey
       }
       
