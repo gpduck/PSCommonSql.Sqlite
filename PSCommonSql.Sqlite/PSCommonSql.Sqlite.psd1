@@ -76,7 +76,17 @@ RequiredModules = @('PSCommonSql')
 # FileList = @()
 
 # Private data to pass to the module specified in RootModule/ModuleToProcess
-# PrivateData = ''
+PrivateData = @{
+	PSData = @{
+		Tags = @('powershell', 'sql', 'sqlite')
+		
+		ProjectUri = "https://github.com/gpduck/PSCommonSql.Sqlite"
+		
+		LicenseUri = "https://raw.githubusercontent.com/gpduck/PSCommonSql.Sqlite/master/LICENSE"
+
+		IsPrerelease = 'False'
+	}
+}
 
 # HelpInfo URI of this module
 # HelpInfoURI = ''

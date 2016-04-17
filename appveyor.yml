@@ -1,0 +1,45 @@
+# See http://www.appveyor.com/docs/appveyor-yml for many more options
+os: Unstable
+
+# Init variables for publishing to PowerShell Gallery or GitHub
+environment:
+  ModuleName: $(APPVEYOR_PROJECT_NAME) # Hard code if you really need to...
+  GitHubRelease: $(APPVEYOR_PROJECT_NAME)-v1.0.1 # TODO: extract version from PSD1...
+  NugetApiKey: # Add your API key to AppVeyor, paste the encrypted bit here
+    secure: v/rfpnUEoQZscZmcQFHEdlrBanHQVYs3WyEKGkhTrKAQeJ4ejrhd0IC3m7PlAAoN
+
+#Beware the infinite rebuild bug. Woke up to 84 new releases!
+skip_tags: true
+
+# Skip on updates to the readme.
+# We can force this by adding [skip ci] or [ci skip] anywhere in commit message 
+skip_commits:
+  message: /updated readme.*/
+
+# PS2 compat
+install:
+  - cinst pester -y
+
+# Package things up.
+build_script:
+  - ps: .\build.bat Build
+
+# Test with native PS and PS version 2. Upload test results
+test_script:
+  # Set up pester path for PSv2
+  #- ps: . .\Tests\Helpers\Initialize-PesterPath.ps1
+  # Test in PSv2
+  #- ps: powershell.exe -version 2.0 -executionpolicy bypass -noprofile -file .\Tests\Helpers\Invoke-PesterFromAppveyor.ps1
+  # Test in native PS
+  - ps: .\build.bat Test
+  # Collect all test results, fail if any failures
+  #- ps: . .\Tests\Helpers\Read-PesterOutput.ps1
+
+# zipped package for delivery
+artifacts:
+  - path: "**\$(ModuleName).*.nupkg"
+
+# Duct tape, until this is implemented:
+#    https://github.com/appveyor/ci/issues/128
+deploy_script:
+  - ps: .\build.bat Release

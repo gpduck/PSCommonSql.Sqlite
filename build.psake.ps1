@@ -5,22 +5,28 @@ properties {
     $version = git.exe describe --abbrev=0 --tags
     $nugetExe = "$baseDir\vendor\tools\nuget"
     $targetBase = "tools"
+    $NugetApiKey = $ENV:NugetApiKey
 }
 
 $ModuleName = "PSCommonSql.Sqlite"
 
-Task default -depends CopyLibraries, Test, Build
-Task Build -depends CopyLibraries, Package
+Task default -depends Test, Build
+Task Build -depends CopyLibraries
 Task Package -depends Version-Module, Pack-Nuget, Unversion-Module
-Task Release -depends Build, Push-Nuget
+Task Release -depends Package, Push-Nuget
 
-Task Test {
+Task Test -Depends CopyLibraries {
     RequireModule "Pester"
     RequireModule "PSCommonSql"
     
     Push-Location $baseDir
     Import-Module Pester -ErrorAction Stop
-    $PesterResult = Invoke-Pester -PassThru
+    $PesterResult = Invoke-Pester -PassThru -OutputFormat NUnitXml -OutputFile $baseDir\PesterResult.xml
+    if($env:APPVEYOR -eq "True") {
+        $Address = "https://ci.appveyor.com/api/testresults/nunit3/$($env:APPVEYOR_JOB_ID)"
+        Invoke-RestMethod -uri $Address -Method Post -InFile $baseDir\PesterResult.xml -ContentType "multipart/form-data"
+    }
+    
     if($PesterResult.FailedCount -gt 0) {
       throw "$($PesterResult.FailedCount) tests failed."
     }
@@ -72,6 +78,22 @@ Task Pack-Nuget {
 Task Push-Nuget {
     $pkg = Get-Item -path $baseDir\build\$ModuleName.*.nupkg
     exec { .$nugetExe push $pkg.FullName }
+}
+
+Task PSGalleryRelease {
+    #Thanks to Trevor Sullivan!
+    #https://github.com/pcgeek86/PSNuGet/blob/master/deploy.ps1
+    Find-Package -ForceBootstrap -Name zzzzzz -ErrorAction Ignore;
+    
+    $PublishParams = @{
+        Path = Join-Path $baseDir "$ModuleName\$ModuleName"
+        NuGetApiKey = $ENV:NugetApiKey
+    }
+    
+    $ModuleInfo = Get-Module -List -Name $PublishParams["Path"]
+    $ModuleInfoParams = $ModuleInfo.PrivateData.PSData
+    
+    Publish-Module @PublishParams @ModuleInfoParams
 }
 
 function RequireModule {
