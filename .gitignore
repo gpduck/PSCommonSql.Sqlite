@@ -1,4 +1,4 @@
 build/
 vendor/packages/
-System.Data.Sqlite/bin/
+PSCommonSql.Sqlite/bin/
 PesterResult.xml
