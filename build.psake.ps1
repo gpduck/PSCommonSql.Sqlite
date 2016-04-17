@@ -2,7 +2,7 @@ properties {
     $currentDir = resolve-path .
     $Invocation = (Get-Variable MyInvocation -Scope 1).Value
     $baseDir = $psake.build_script_dir
-    $version = git.exe describe --abbrev=0 --tags
+    $version = $env:APPVEYOR_BUILD_VERSION
     $nugetExe = "${baseDir}\vendor\tools\nuget"
     $targetBase = "tools"
     $NugetApiKey = $ENV:NugetApiKey
