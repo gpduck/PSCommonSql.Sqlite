@@ -94,11 +94,7 @@ Task DoPSGalleryRelease {
           NuGetApiKey = $ENV:NugetApiKey
       }
       
-      dir $PublishParams['Path'] | %{
-        Write-Host $_.Fullname
-      }
-      
-      $ModuleInfo = Get-Module -List -Name $PublishParams['Path'] -ErrorAction Stop
+      $ModuleInfo = Get-Module -List -Name "$($PublishParams['Path'])\$ModuleName.psd1" -ErrorAction Stop
       $ModuleInfoParams = $ModuleInfo.PrivateData.PSData
 
       Publish-Module @PublishParams @ModuleInfoParams
