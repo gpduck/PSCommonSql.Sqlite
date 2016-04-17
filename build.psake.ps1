@@ -8,6 +8,7 @@ properties {
     $NugetApiKey = $ENV:NugetApiKey
 }
 
+Write-Host "Using nuget at $NugetExe"
 $ModuleName = "PSCommonSql.Sqlite"
 $NugetPath = Split-Path $NugetEXE -parent
 $env:path += ";$NugetPath"
