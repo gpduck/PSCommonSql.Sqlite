@@ -4,9 +4,8 @@ os: "WMF 5"
 # Init variables for publishing to PowerShell Gallery or GitHub
 environment:
   ModuleName: $(APPVEYOR_PROJECT_NAME) # Hard code if you really need to...
-  GitHubRelease: $(APPVEYOR_PROJECT_NAME)-v1.0.1 # TODO: extract version from PSD1...
   NugetApiKey: # Add your API key to AppVeyor, paste the encrypted bit here
-    secure: 8oejCagCM0DPK8PK+0vZ+SCsgsYSW55dT3lFKgY5i+vFP9CSCsNEnaJzVmzmgpQn
+    secure: jXazBq7TwO/xjTl/7thSARD6vR19+lQinffBZQO191hGCFl+3n4AqnG+9LdvsGH0
 
 #Beware the infinite rebuild bug. Woke up to 84 new releases!
 skip_tags: true

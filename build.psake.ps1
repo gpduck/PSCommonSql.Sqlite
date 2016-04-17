@@ -85,9 +85,8 @@ Task DoPSGalleryRelease {
     if($ENV:APPVEYOR_REPO_BRANCH -ne "master") {
         Write-Verbose "Skipping deployment for branch $ENV:APPVEYOR_REPO_BRANCH"
     } else {
-      #Thanks to Trevor Sullivan!
-      #https://github.com/pcgeek86/PSNuGet/blob/master/deploy.ps1
-      Find-Package -ForceBootstrap -Name zzzzzz -ErrorAction Ignore;
+      $NugetPath = Split-Path $NugetEXE -parent
+      $env:path += ";$NugetPath"
       
       $PublishParams = @{
           Path = Join-Path $baseDir "$ModuleName"
@@ -104,5 +103,5 @@ function RequireModule {
     Import-Module PowershellGet -ErrorAction Stop
     Find-Package -ForceBootstrap -Name zzzzzz -ErrorAction Ignore
     Install-Module $Name -Scope CurrentUser
-  }  
+  }
 }
