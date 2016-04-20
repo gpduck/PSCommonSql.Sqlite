@@ -59,9 +59,9 @@ RequiredModules = @('PSCommonSql')
 
 # Functions to export from this module
 FunctionsToExport = @(
-	'Get-SqliteDbProviderFactory',
-	'New-SQLiteConnection',
-	'New-SQLiteConnectionString'
+  'Get-SqliteDbProviderFactory',
+  'New-SQLiteConnection',
+  'New-SQLiteConnectionString'
 )
 
 # Cmdlets to export from this module
@@ -81,13 +81,13 @@ FunctionsToExport = @(
 
 # Private data to pass to the module specified in RootModule/ModuleToProcess
 PrivateData = @{
-	PSData = @{
-		Tags = @('powershell', 'sql', 'sqlite')
-		
-		ProjectUri = "https://github.com/gpduck/PSCommonSql.Sqlite"
-		
-		LicenseUri = "https://raw.githubusercontent.com/gpduck/PSCommonSql.Sqlite/master/LICENSE"
-	}
+  PSData = @{
+    Tags = @('powershell', 'sql', 'sqlite')
+
+    ProjectUri = "https://github.com/gpduck/PSCommonSql.Sqlite"
+
+    LicenseUri = "https://raw.githubusercontent.com/gpduck/PSCommonSql.Sqlite/master/LICENSE"
+  }
 }
 
 # HelpInfo URI of this module
@@ -97,4 +97,3 @@ PrivateData = @{
 # DefaultCommandPrefix = ''
 
 }
-
