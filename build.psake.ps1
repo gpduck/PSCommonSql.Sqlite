@@ -25,6 +25,14 @@ Task Test -Depends Init,CopyLibraries {
     RequireModule "Pester"
     RequireModule "PSCommonSql"
     
+    if(Import-Module -Name PSScriptAnalyzer -PassThru -ErrorAction SilentlyContinue) {
+        $SAResult = @(Invoke-ScriptAnalyzer -Path "$baseDir\$ModuleName" -Recurse)
+        $SAResult
+        if($SAResult.Count -gt 0) {
+            throw "PSScriptAnalyzer reported $($SAResult.Count) issues."
+        }
+    }
+    
     Push-Location $baseDir
     Import-Module Pester -ErrorAction Stop
     $PesterResult = Invoke-Pester -PassThru -OutputFormat NUnitXml -OutputFile $baseDir\PesterResult.xml
