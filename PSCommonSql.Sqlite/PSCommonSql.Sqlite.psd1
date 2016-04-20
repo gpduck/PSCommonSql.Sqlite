@@ -58,7 +58,11 @@ RequiredModules = @('PSCommonSql')
 # NestedModules = @()
 
 # Functions to export from this module
-# FunctionsToExport = '*'
+FunctionsToExport = @(
+	'Get-SqliteDbProviderFactory',
+	'New-SQLiteConnection',
+	'New-SQLiteConnectionString'
+)
 
 # Cmdlets to export from this module
 # CmdletsToExport = '*'
