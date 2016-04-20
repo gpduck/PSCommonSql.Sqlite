@@ -8,6 +8,7 @@ if '%1'=='-h' goto help
 "%~dp0vendor\tools\NuGet.exe" install "%~dp0vendor\packages.config" -o "%~dp0vendor\packages"
 @SET cmd=$psakeDir = ([array](dir """%~dp0vendor\packages\psake.*"""))[-1]; ".$psakeDir\tools\psake.ps1" build.psake.ps1 %* -ScriptPath "$psakeDir\tools" ; if ($psake.build_success -eq $false) { exit 1 } else { exit 0 }
 powershell -NoProfile -ExecutionPolicy Bypass -Command ^ "%cmd%"
+exit /b %ERRORLEVEL%
 goto :eof
 
 :help
