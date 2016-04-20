@@ -74,7 +74,9 @@ Task Version-Module {
             | Set-Content "$baseDir\$ModuleName\$ModuleName.psm1"
         }
     } catch {}
-    Update-ModuleManifest -Path "$baseDir\$ModuleName\$ModuleName.psd1" -ModuleVersion $Version
+    (Get-Content "$baseDir\$ModuleName\$ModuleName.psd1") | ForEach-Object {
+        $_ -replace '^(moduleVersion\s*=\s*).*$',"`$1'$version'"
+    } | Set-Content "$baseDir\$ModuleName\$ModuleName.psd1"
 }
 
 Task Unversion-Module {
