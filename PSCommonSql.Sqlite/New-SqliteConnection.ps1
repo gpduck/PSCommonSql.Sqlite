@@ -57,6 +57,7 @@ function New-SQLiteConnection
     #>
     [cmdletbinding()]
     [OutputType([System.Data.Common.DbConnection])]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions")]
     param(
         [Parameter( Position=0,
                     Mandatory=$true,

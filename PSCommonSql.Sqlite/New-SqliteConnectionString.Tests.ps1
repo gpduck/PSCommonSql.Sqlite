@@ -1,4 +1,7 @@
-﻿$here = Split-Path -Parent $MyInvocation.MyCommand.Path
+﻿[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSAvoidUsingConvertToSecureStringWithPlainText")]
+param()
+
+$here = Split-Path -Parent $MyInvocation.MyCommand.Path
 #$sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path).Replace(".Tests.", ".")
 Import-Module $here 
 
