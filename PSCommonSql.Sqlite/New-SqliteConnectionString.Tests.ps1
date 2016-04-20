@@ -1,9 +1,9 @@
-﻿[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSAvoidUsingConvertToSecureStringWithPlainText")]
+﻿[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSAvoidUsingConvertToSecureStringWithPlainText","")]
 param()
 
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
 #$sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path).Replace(".Tests.", ".")
-Import-Module $here 
+Import-Module $here
 
 Describe "New-SqliteConnectionString" {
     It "Generates a valid connection string with DataSource" {
