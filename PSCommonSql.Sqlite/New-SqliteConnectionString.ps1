@@ -1,6 +1,7 @@
 ﻿function New-SQLiteConnectionString {
     [cmdletbinding()]
     [OutputType([String])]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions")]
     param(
         [Parameter( Position=0,
                     Mandatory=$true,
