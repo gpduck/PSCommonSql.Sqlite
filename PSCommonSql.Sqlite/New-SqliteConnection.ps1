@@ -79,8 +79,11 @@ function New-SQLiteConnection
     Process
     {
 				foreach($String in $ConnectionString) {
-						$conn = New-SqlConnection @PSBoundParameters -DbProviderName $Script:DbProviderName
+						$conn = New-SqlConnection -ConnectionString $ConnectionString -Open $false -DbProviderName $Script:DbProviderName
 						$conn.ParseViaFramework = $true
+						if($Open) {
+							$conn.Open()
+						}
 						$conn
 				}
     }
