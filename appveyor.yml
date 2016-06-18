@@ -1,6 +1,9 @@
 # See http://www.appveyor.com/docs/appveyor-yml for many more options
 os: "WMF 5"
 
+init:
+- ps: '"building $env:APPVEYOR_BUILD_VERSION"'
+
 # Init variables for publishing to PowerShell Gallery or GitHub
 environment:
   ModuleName: $(APPVEYOR_PROJECT_NAME) # Hard code if you really need to...
